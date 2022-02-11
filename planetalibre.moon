@@ -125,6 +125,11 @@ get_feeds = ->
 --  * Enlace de la publicación.
 --  * Fecha de publicación/modificación.
 get_posts = (feeds) ->
+  require 'feedparser'
+
+  posts = {}
+
+  posts
 
 main = ->
   print '=> Connecting to remote Gemini capsules'

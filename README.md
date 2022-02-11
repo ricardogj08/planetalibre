@@ -4,6 +4,25 @@ Un agregador de noticias de cápsulas [Gemini](https://gemini.circumlunar.space/
 
 > Inspirado en [*PlanetaLibre por Victorhck*](https://victorhck.gitlab.io/planetalibre/), con el fin de ofrecer este tipo de servicio web al protocolo Gemini.
 
+## Dependencias
+
+* [MoonScript >= 0.5.0](https://moonscript.org/)
+* [LuaSocket](https://github.com/diegonehab/luasocket)
+* [LuaSec](https://github.com/brunoos/luasec)
+* [feedparser](https://github.com/slact/lua-feedparser)
+* [lua-path](https://github.com/moteus/lua-path)
+
+Para instalar las dependecias en sistemas basados en Arch Linux, solo debes ejecutar los siguientes comandos con privilegios de administrador:
+
+```
+# pacman -S gcc lua51 luarock
+# luarocks --lua-version 5.1 install moonscript
+# luarocks --lua-version 5.1 install luasocket
+# luarocks --lua-version 5.1 install luasec
+# luarocks --lua-version 5.1 install feedparser
+# luarocks --lua-version 5.1 install lua-path
+```
+
 ## Licencia
 
 ```text
