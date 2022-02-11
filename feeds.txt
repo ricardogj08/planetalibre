@@ -1,0 +1,3 @@
+gemini://gemini.astropirados.space/gemlog/atom.xml
+gemini://aperalesf.flounder.online/gemlog/atom.xml
+gemini://reisub.nsupdate.info/fabianbonetti/atom.xml

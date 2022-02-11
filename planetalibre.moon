@@ -16,3 +16,50 @@
 -- Véase la Licencia para consultar el texto específico relativo a los permisos
 -- y limitaciones establecidos en la Licencia.
 --
+
+socket = require 'socket'
+url    = require 'socket.url'
+ssl    = require 'ssl'
+
+-- Configuración por defecto.
+config =
+  input: 'feeds.txt'
+
+fail   = (link) -> print "[fail] #{link}"
+sucess = (link) -> print "[ok]   #{link}"
+
+connection = (capsule) ->
+
+-- Obtiene los feeds de Atom o RSS desde un archivo con la lista de URLs Gemini.
+get_feeds = ->
+  file  = assert io.open(config.input), "Could not access '#{config.input}' file."
+  feeds = {}
+
+  for line in file\lines!
+    local posts
+
+    -- Remueve espacios de principio y fin.
+    link = line\match '^%s*(.-)%s*$'
+
+    -- Segmenta en una tabla asociativa la URL del feed.
+    capsule = url.parse link
+
+    -- Obtiene los publicaciones de una cápsula.
+    if capsule and capsule.host and capsule.path
+      posts = connection capsule
+
+    if posts
+        table.insert feeds, {:link, :posts}
+        sucess link
+    else
+      fail link
+
+  file\close!
+
+  feeds
+
+main = ->
+  print '=> Connecting to remote Gemini capsules'
+  feeds = get_feeds!
+
+main!
