@@ -46,12 +46,17 @@ connection = (capsule) ->
   -- Crea un socket TCP maestro.
   conn = assert socket.tcp!
 
+  -- Define el tiempo máximo de espera por bloque en modo no seguro (segundos).
+  conn\settimeout gemini.timeout
+
   -- Transforma el socket maestro a cliente
   -- para conectarse a un host remoto.
-  conn\connect capsule.host, gemini.port
+  unless conn\connect capsule.host, gemini.port
+    return conn\close!
 
   -- Configura una conexión segura.
-  conn = ssl.wrap conn, gemini.params
+  unless conn = ssl.wrap conn, gemini.params
+    return conn\close!
 
   -- Define el nombre del servidor remoto al cual conectarse.
   conn\sni capsule.host
@@ -60,7 +65,8 @@ connection = (capsule) ->
   conn\settimeout gemini.timeout
 
   -- Realiza y transforma a una conexión segura.
-  conn\dohandshake!
+  unless conn\dohandshake!
+    return conn\close!
 
   request = url.build {
     scheme: gemini.scheme
@@ -70,10 +76,12 @@ connection = (capsule) ->
   }
 
   -- Solicita el archivo XML del feed de Atom o RSS.
-  conn\send "#{request}\r\n"
+  unless conn\send "#{request}\r\n"
+    return conn\close!
 
   -- Ignora la cabecera de respuesta.
-  conn\receive '*l'
+  unless conn\receive '*l'
+    return conn\close!
 
   -- Obtiene el contenido del archivo.
   response = conn\receive '*a'
@@ -97,7 +105,7 @@ get_feeds = ->
     -- Segmenta en una tabla asociativa la URL del feed.
     capsule = url.parse link
 
-    -- Obtiene los publicaciones de una cápsula.
+    -- Obtiene las publicaciones de una cápsula.
     if capsule and capsule.host and capsule.path
       posts = connection capsule
 
@@ -111,8 +119,18 @@ get_feeds = ->
 
   feeds
 
+-- Valida la sintaxis de los feeds y obtiene las publicaciones con los siguientes datos:
+--  * Nombre de la cápsula.
+--  * Título de la publicación.
+--  * Enlace de la publicación.
+--  * Fecha de publicación/modificación.
+get_posts = (feeds) ->
+
 main = ->
   print '=> Connecting to remote Gemini capsules'
   feeds = get_feeds!
+
+  print '\n=> Validating feed syntax'
+  posts = get_posts(feeds)
 
 main!
