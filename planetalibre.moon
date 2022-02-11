@@ -110,8 +110,8 @@ get_feeds = ->
       posts = connection capsule
 
     if posts
-        table.insert feeds, {:link, :posts}
-        sucess link
+      table.insert feeds, {:link, :posts}
+      sucess link
     else
       fail link
 
@@ -128,6 +128,27 @@ get_posts = (feeds) ->
   require 'feedparser'
 
   posts = {}
+
+  for feed in *feeds
+    -- Retorna una tabla con el contenido de un feed.
+    parsed = feedparser.parse feed.posts
+
+    if parsed and parsed.feed.title and parsed.entries
+      capsule = parsed.feed.title
+
+      sucess feed.link
+
+      -- Itera sobre todas las publicaciones de una cápsula.
+      for post in *parsed.entries
+        {:title, :link, updated_parsed: date} = post
+
+        if title and link and date
+          table.insert posts, {:capsule, :title, :link, :date}
+    else
+      fail feed.link
+
+  -- Ordena por fecha las publicaciones.
+  table.sort posts, (a, b) -> a.date > b.date
 
   posts
 
