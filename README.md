@@ -36,6 +36,7 @@ $ moon planetalibre.moon --help
 * [Especificación del protocolo Gemini.](https://gemini.circumlunar.space/docs/specification.gmi)
 * [Manual de referencia de `MoonScript`.](https://moonscript.org/reference/)
 * [Manual de referencia de `Lua 5.1`.](https://www.lua.org/manual/5.1/es/manual.html)
+* [Guía de estilo para escribir código en `Lua`.](https://github.com/Olivine-Labs/lua-style-guide)
 * [Documentación de `lua-path`.](https://moteus.github.io/path/index.html)
 * [Introducción a `LuaSocket`.](https://w3.impa.br/~diego/software/luasocket/introduction.html)
 * [Manual de referencia del módulo socket de `LuaSocket`.](https://w3.impa.br/~diego/software/luasocket/socket.html)

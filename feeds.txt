@@ -1,3 +1,10 @@
-gemini://gemini.astropirados.space/gemlog/atom.xml
-gemini://aperalesf.flounder.online/gemlog/atom.xml
+gemini://gemini.elbinario.net/atom.xml
+gemini://c3po.aljadra.xyz/atom.xml
+gemini://gemini.circumlunar.space/users/rbasile/blog/feed.atom
 gemini://reisub.nsupdate.info/fabianbonetti/atom.xml
+gemini://gemini.astropirados.space/gemlog/atom.xml
+gemini://latte.flounder.online/gemlog/atom.xml
+gemini://bogart.flounder.online/gemlog/atom.xml
+gemini://costas.dev/posts/atom.xml
+gemini://moribundo.flounder.online/gemlog/atom.xml
+gemini://aperalesf.flounder.online/gemlog/atom.xml

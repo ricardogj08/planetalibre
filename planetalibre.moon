@@ -182,7 +182,7 @@ get_feeds = ->
     if capsule and capsule.host and capsule.path
       posts = connection capsule
 
-    if posts
+    if posts and posts != 1
       table.insert feeds, {:link, :posts}
       sucess link
     else
