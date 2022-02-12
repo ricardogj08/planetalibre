@@ -15,7 +15,7 @@ Un agregador de noticias de cápsulas [Gemini](https://gemini.circumlunar.space/
 Para instalar las dependecias en sistemas basados en Arch Linux, solo debes ejecutar los siguientes comandos con privilegios de administrador:
 
 ```
-# pacman -S gcc lua51 luarock
+# pacman -S gcc lua51 luarocks
 # luarocks --lua-version 5.1 install moonscript
 # luarocks --lua-version 5.1 install luasocket
 # luarocks --lua-version 5.1 install luasec
@@ -33,8 +33,8 @@ $ moon planetalibre.moon
 ## Referencias
 
 * [Especificación del protocolo Gemini.](https://gemini.circumlunar.space/docs/specification.gmi)
-* [Manual de referencia de `Lua 5.1`.](https://www.lua.org/manual/5.1/es/manual.html)
 * [Manual de referencia de `MoonScript`.](https://moonscript.org/reference/)
+* [Manual de referencia de `Lua 5.1`.](https://www.lua.org/manual/5.1/es/manual.html)
 * [Documentación de `lua-path`.](https://moteus.github.io/path/index.html)
 * [Introducción a `LuaSocket`.](https://w3.impa.br/~diego/software/luasocket/introduction.html)
 * [Manual de referencia del módulo socket de `LuaSocket`.](https://w3.impa.br/~diego/software/luasocket/socket.html)

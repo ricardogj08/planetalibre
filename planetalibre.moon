@@ -45,6 +45,14 @@ gemini = {
 fail   = (link) -> print "[fail] #{link}"
 sucess = (link) -> print "[ok]   #{link}"
 
+-- Construye una URL desde una URL segmentada.
+build_link = (link) -> url.build {
+  scheme: gemini.scheme
+  host:   link.host
+  port:   gemini.port
+  path:   link.path
+}
+
 -- Realiza una conexión con un host remoto Gemini
 -- y obtiene el contenido del feed de Atom o RSS.
 connection = (capsule) ->
@@ -73,12 +81,7 @@ connection = (capsule) ->
   unless conn\dohandshake!
     return conn\close!
 
-  request = url.build {
-    scheme: gemini.scheme
-    host:   capsule.host
-    port:   gemini.port
-    path:   capsule.path
-  }
+  request = build_link capsule
 
   -- Solicita el archivo XML del feed de Atom o RSS.
   unless conn\send "#{request}\r\n"
@@ -175,6 +178,9 @@ render_website = (posts) ->
   for itr, post in ipairs(posts)
     {:capsule, :title, :link, :date} = post
 
+    -- Formatea el link de la publicación.
+    link = build_link url.parse link
+
     -- Formatea la fecha de publicación/modificación.
     date = os.date post_date_format, date
 
@@ -189,7 +195,9 @@ render_website = (posts) ->
     if itr == config.limit then break
 
   index\write '\n'
+
   atom\write '</feed>\n'
+  atom\close!
 
   -- Añade un pie de página si existe el archivo.
   if footer = io.open config.footer
@@ -197,7 +205,6 @@ render_website = (posts) ->
     footer\close!
 
   index\close!
-  atom\close!
 
 main = ->
   print '=> Connecting to remote Gemini capsules'

@@ -6,6 +6,7 @@ Un agregador de noticias de cápsulas Gemini sobre GNU/Linux, software libre, te
 => https://github.com/ricardogj08/planetalibre Código fuente
 => /capsulas.gemini Cápsulas Gemini
 => /acerca-de.gemini Acerca de...
+=> /atom.xml Feed de PlanetaLibre
 
 ```Dibujo en ASCII del planeta Tierra.
 .    .    *  .   .  .   .  *     .  .        . .   .     .  *   .     .  .   .
