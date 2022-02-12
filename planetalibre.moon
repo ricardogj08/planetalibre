@@ -23,7 +23,12 @@ ssl    = require 'ssl'
 
 -- Configuración por defecto.
 config = {
-  input: 'feeds.txt'
+  input:  'feeds.txt'
+  index:  'website/index.gemini'
+  atom:   'website/atom.xml'
+  header: 'layouts/header.gemini'
+  footer: 'layouts/footer.gemini'
+  limit:  64
 }
 
 -- Parámetros de conexión a Gemini.
@@ -152,11 +157,56 @@ get_posts = (feeds) ->
 
   posts
 
+-- Formatea las publicaciones, genera el sitio web Gemini
+-- y el feed de Atom de PlanetaLibre.
+render_website = (posts) ->
+  index  = assert io.open(config.index, 'w+'), "Could not access '#{config.index}' file."
+  atom   = assert io.open(config.atom, 'w+'), "Could not access '#{config.atom}' file."
+
+  atom_date_format = '%Y-%m-%dT%H:%M:%SZ'
+  post_date_format = '%F'
+  timestamp = 0
+
+  -- Añade un encabezado si existe el archivo.
+  if header = io.open config.header
+    index\write header\read '*a'
+    header\close!
+
+  for itr, post in ipairs(posts)
+    {:capsule, :title, :link, :date} = post
+
+    -- Formatea la fecha de publicación/modificación.
+    date = os.date post_date_format, date
+
+    -- Agrupa las publicaciones por día.
+    if timestamp != date
+      timestamp = date
+      index\write "\n### #{timestamp}\n\n"
+
+    -- Agrega una publicación en la página principal.
+    index\write "=> #{link} #{capsule} - #{title}\n"
+
+    if itr == config.limit then break
+
+  index\write '\n'
+  atom\write '</feed>\n'
+
+  -- Añade un pie de página si existe el archivo.
+  if footer = io.open config.footer
+    index\write footer\read '*a'
+    footer\close!
+
+  index\close!
+  atom\close!
+
 main = ->
   print '=> Connecting to remote Gemini capsules'
   feeds = get_feeds!
 
   print '\n=> Validating feed syntax'
   posts = get_posts(feeds)
+
+  render_website(posts)
+  print '\n=> Homepage and PlanetaLibre feed generated'
 
 main!
