@@ -39,10 +39,11 @@ gemini = {
   scheme:  'gemini'
   port:    1965
   timeout: 3
-  params:
+  params: {
     mode:     'client'
     protocol: 'tlsv1_2'
     verify:   'none'
+  }
 }
 
 -- Muestra un mensaje de ayuda.
@@ -75,6 +76,49 @@ build_link = (link) -> url.build {
   port:   gemini.port
   path:   link.path
 }
+
+-- Opciones de uso.
+usage = ->
+  num_args = #arg
+
+  if num_args == 0 then return
+
+  for pos = 1, num_args, 2
+    option = arg[pos]
+    param  = arg[pos + 1] or shelp!
+
+    -- Establece opciones de configuración.
+    switch option
+      when '--atom'
+        config.atom = param
+      when '--domain'
+        config.domain = param
+      when '--footer'
+        config.footer = param
+      when '--header'
+        config.header = param
+      when '--input'
+        config.input = param
+      when '--lang'
+        config.lang = param
+      when '--output'
+        config.index = param
+      when '--title'
+        config.title = param
+      else
+        shelp!
+
+  PATH = require 'path'
+
+  config.index_url = build_link {
+    host: config.domain
+    path: '/' .. PATH.basename config.index
+  }
+
+  config.atom_url = build_link {
+    host: config.domain
+    path: '/' .. PATH.basename config.atom
+  }
 
 -- Realiza una conexión con un host remoto Gemini
 -- y obtiene el contenido del feed de Atom o RSS.
@@ -230,6 +274,8 @@ render_website = (posts) ->
   index\close!
 
 main = ->
+  usage!
+
   print '=> Conectando con cápsulas Gemini remotas'
   feeds = get_feeds!
 

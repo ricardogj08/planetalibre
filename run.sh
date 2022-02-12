@@ -10,5 +10,7 @@ moon "$path"/planetalibre.moon \
   --domain reisub.nsupdate.info/planetalibre \
   --footer "$path"/layouts/footer.gemini \
   --header "$path"/layouts/header.gemini \
-  --input "$path"/feed.txt \
-  --output "$path"/website/index.gemini
+  --input "$path"/feeds.txt \
+  --lang 'es' \
+  --output "$path"/website/index.gemini \
+  --title 'PlanetaLibre'
