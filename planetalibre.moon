@@ -29,6 +29,9 @@ config = {
   header: 'layouts/header.gemini'
   footer: 'layouts/footer.gemini'
   limit:  64
+  lang:   'es'
+  title:  'PlanetaLibre'
+  domain: 'localhost'
 }
 
 -- Parámetros de conexión a Gemini.
@@ -41,6 +44,26 @@ gemini = {
     protocol: 'tlsv1_2'
     verify:   'none'
 }
+
+-- Muestra un mensaje de ayuda.
+shelp = ->
+  print [[
+PlanetaLibre 2.0 - Un agregador de noticias de cápsulas Gemini sobre GNU/Linux, software libre,
+                   tecnología y privacidad, que utiliza los feeds de Atom y RSS, escrito en MoonScript.
+
+Sinopsis:
+  moon planetalibre.moon [OPCIONES]
+
+Opciones:
+  --atom   <FILE>   - Archivo de salida del feed de Atom [default: atom.xml].
+  --domain <URL>    - Dominio del sitio web [default: localhost].
+  --footer <FILE>   - Archivo del pie de página de la página principal [default: footer.gemini].
+  --header <FILE>   - Archivo del encabezado de la página principal [default: header.gemini].
+  --input  <FILE>   - Archivo con la lista de las URLs Gemini de los feeds [default: feeds.txt].
+  --lang   <STRING> - Idioma de las publicaciones [default: es].
+  --output <FILE>   - Archivo Gemini de salida de la página principal [default: index.gemini].
+  --title  <STRING> - Nombre del sitio web [default: PlanetaLibre].]]
+  os.exit!
 
 fail   = (link) -> print "[fail] #{link}"
 sucess = (link) -> print "[ok]   #{link}"
@@ -101,7 +124,7 @@ connection = (capsule) ->
 
 -- Obtiene los feeds de Atom o RSS desde un archivo con la lista de URLs Gemini.
 get_feeds = ->
-  file  = assert io.open(config.input), "Could not access '#{config.input}' file."
+  file  = assert io.open(config.input), "No se puede acceder al archivo '#{config.input}'."
   feeds = {}
 
   for line in file\lines!
@@ -163,8 +186,8 @@ get_posts = (feeds) ->
 -- Formatea las publicaciones, genera el sitio web Gemini
 -- y el feed de Atom de PlanetaLibre.
 render_website = (posts) ->
-  index  = assert io.open(config.index, 'w+'), "Could not access '#{config.index}' file."
-  atom   = assert io.open(config.atom, 'w+'), "Could not access '#{config.atom}' file."
+  index = assert io.open(config.index, 'w+'), "No se puede acceder al archivo '#{config.index}'."
+  atom  = assert io.open(config.atom, 'w+'), "No se puede acceder al archivo '#{config.atom}'."
 
   atom_date_format = '%Y-%m-%dT%H:%M:%SZ'
   post_date_format = '%F'
@@ -207,13 +230,13 @@ render_website = (posts) ->
   index\close!
 
 main = ->
-  print '=> Connecting to remote Gemini capsules'
+  print '=> Conectando con cápsulas Gemini remotas'
   feeds = get_feeds!
 
-  print '\n=> Validating feed syntax'
+  print '\n=> Validando la sintaxis de los feed'
   posts = get_posts(feeds)
 
   render_website(posts)
-  print '\n=> Homepage and PlanetaLibre feed generated'
+  print '\n=> Generado la página principal y el feed de PlanetaLibre'
 
 main!
