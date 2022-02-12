@@ -28,6 +28,7 @@ Para instalar las dependecias en sistemas basados en Arch Linux, solo debes ejec
 ```shell
 $ cd planetalibre
 $ moon planetalibre.moon
+$ moon planetalibre.moon --help
 ```
 
 ## Referencias

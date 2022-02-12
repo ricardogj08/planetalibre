@@ -81,8 +81,6 @@ build_link = (link) -> url.build {
 usage = ->
   num_args = #arg
 
-  if num_args == 0 then return
-
   for pos = 1, num_args, 2
     option = arg[pos]
     param  = arg[pos + 1] or shelp!
@@ -242,11 +240,40 @@ render_website = (posts) ->
     index\write header\read '*a'
     header\close!
 
+    -- Encabezado del feed.
+    atom\write string.format [[
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="%s">
+<id>%s</id>
+<title>%s</title>
+<updated>%s</updated>
+<author>
+  <name>%s</name>
+</author>
+<link rel="self" href="%s" type="application/atom+xml"/>
+<link rel="alternate" href="%s" type="text/gemini"/>
+<generator uri="https://github.com/ricardogj08/planetalibre" version="2.0">PlanetaLibre</generator>
+]], config.lang, config.atom_url, config.title, os.date(atom_date_format),
+      config.title, config.atom_url, config.index_url
+
   for itr, post in ipairs(posts)
     {:capsule, :title, :link, :date} = post
 
     -- Formatea el link de la publicación.
     link = build_link url.parse link
+
+    -- Agrega una entrada al feed.
+    atom\write string.format [[
+<entry>
+  <id>%s</id>
+  <title>%s</title>
+  <updated>%s</updated>
+  <author>
+    <name>%s</name>
+  </author>
+  <link rel="alternate" href="%s" type="text/gemini"/>
+</entry>
+]], link, title, os.date(atom_date_format, date), capsule, link
 
     -- Formatea la fecha de publicación/modificación.
     date = os.date post_date_format, date
