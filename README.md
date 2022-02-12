@@ -23,6 +23,13 @@ Para instalar las dependecias en sistemas basados en Arch Linux, solo debes ejec
 # luarocks --lua-version 5.1 install lua-path
 ```
 
+## Uso
+
+```shell
+$ cd planetalibre
+$ ./run.sh
+```
+
 ## Referencias
 
 * [Especificación del protocolo Gemini.](https://gemini.circumlunar.space/docs/specification.gmi)
