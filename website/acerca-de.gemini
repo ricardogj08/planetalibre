@@ -23,15 +23,6 @@ La recopilación de fuentes y la actualización del sitio web se realiza todos l
 => gemini://gemini.circumlunar.space/capcom/ Servicio web público de CAPCOM.
 => https://tildegit.org/solderpunk/CAPCOM Repositorio Git de CAPCOM.
 
-## Contacto
-
-* Correo electrónico - ricardogj08@riseup.net
-* Fediverso (Pleroma) - @ricardogj08@cawfee.club
-
-Únete al canal XMPP en español sobre el protocolo Gemini:
-
-* gemini_es@salas.suchat.org
-
 ## ¿Cómo generar un feed para mi cápsula?
 
 Los feeds son un medio de redifusión de contenido (recursos) web actualizado, por ejemplo, la redifusión de un nuevo episodio de podcast, una nueva publicación artística, un nuevo vídeo, un artículo nuevo, etc. todo lo que represente un recurso web. Se utiliza con frecuencia en blogs bajo el protocolo http/https para dar a conocer las nuevas publicaciones de un blog a sus lectores.
@@ -53,6 +44,15 @@ Si tienes una cápsula que trata sobre estos temas y quieres incluirla en Planet
 * Nombre de la cápsula.
 * URL Gemini de la página principal.
 * URL Gemini del feed de Atom o RSS.
+
+## Contacto
+
+* Correo electrónico - ricardogj08@riseup.net
+* Fediverso (Pleroma) - @ricardogj08@cawfee.club
+
+Únete al canal XMPP en español sobre el protocolo Gemini:
+
+* gemini_es@salas.suchat.org
 
 ## Agradecimientos
 
