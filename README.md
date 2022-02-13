@@ -6,8 +6,9 @@ Un agregador de noticias de cápsulas [Gemini](https://gemini.circumlunar.space/
 
 * Enlace Gemini oficial del sitio web:
     * gemini://reisub.nsupdate.info/planetalibre/
-* [Enlace oficial del sitio web desde un proxy Gemini a http/https (opción 1).](https://proxy.vulpes.one/gemini/reisub.nsupdate.info/planetalibre/)
-* [Enlace oficial del sitio web desde un proxy Gemini a http/https (opción 2).](https://portal.mozz.us/gemini/reisub.nsupdate.info/planetalibre/)
+* Enlace oficial del sitio web desde un proxy Gemini a http/https:
+    * <https://portal.mozz.us/gemini/reisub.nsupdate.info/planetalibre/>
+    * <https://proxy.vulpes.one/gemini/reisub.nsupdate.info/planetalibre/>
 
 ## Dependencias
 
