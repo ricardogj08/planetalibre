@@ -2,11 +2,11 @@
 
 Un agregador de noticias de cápsulas Gemini sobre GNU/Linux, software libre, tecnología y privacidad.
 
-=> /index.gemini Inicio
+=> index.gemini Inicio
 => https://github.com/ricardogj08/planetalibre Código fuente
-=> /capsulas.gemini Cápsulas Gemini
-=> /acerca-de.gemini Acerca de...
-=> /atom.xml Feed de PlanetaLibre
+=> capsulas.gemini Cápsulas Gemini
+=> acerca-de.gemini Acerca de...
+=> atom.xml Feed de PlanetaLibre
 
 # Acerca de...
 
@@ -42,9 +42,9 @@ Siendo el protocolo Gemini una manera simple de construir web, es posible genera
 
 Se listan algunos programas publicados bajo una licencia de software libre para generar feeds en cápsulas Gemini:
 
-=> https://github.com/ricardogj08/fesh fesh - un generador de feeds de Atom para cápsulas Gemini escrito en POSIX sh.
-=> https://tildegit.org/solderpunk/gemfeed Gemfeed - un generador de feeds de Atom escrito en Python 3.
-=> https://git.sr.ht/~dr_tutut/gematom GemAtom - un generador de feeds de Atom escrito en Rust.
+=> https://github.com/ricardogj08/fesh fesh - Un generador de feeds de Atom para cápsulas Gemini escrito en POSIX sh.
+=> https://tildegit.org/solderpunk/gemfeed Gemfeed - Un generador de feeds de Atom escrito en Python 3.
+=> https://git.sr.ht/~dr_tutut/gematom GemAtom - Un generador de feeds de Atom escrito en Rust.
 
 ## ¿Cómo incluir mi cápsula?
 

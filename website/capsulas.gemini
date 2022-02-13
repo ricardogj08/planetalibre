@@ -2,11 +2,11 @@
 
 Un agregador de noticias de cápsulas Gemini sobre GNU/Linux, software libre, tecnología y privacidad.
 
-=> /index.gemini Inicio
+=> index.gemini Inicio
 => https://github.com/ricardogj08/planetalibre Código fuente
-=> /capsulas.gemini Cápsulas Gemini
-=> /acerca-de.gemini Acerca de...
-=> /atom.xml Feed de PlanetaLibre
+=> capsulas.gemini Cápsulas Gemini
+=> acerca-de.gemini Acerca de...
+=> atom.xml Feed de PlanetaLibre
 
 # Cápsulas Gemini agregadas
 
