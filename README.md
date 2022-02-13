@@ -4,6 +4,11 @@ Un agregador de noticias de cápsulas [Gemini](https://gemini.circumlunar.space/
 
 > Inspirado en [*PlanetaLibre por Victorhck*](https://victorhck.gitlab.io/planetalibre/), con el fin de ofrecer este tipo de servicio web al protocolo Gemini.
 
+* Enlace Gemini oficial del sitio web:
+    * gemini://reisub.nsupdate.info/planetalibre/
+* [Enlace oficial del sitio web desde un proxy Gemini a http/https (opción 1).](https://proxy.vulpes.one/gemini/reisub.nsupdate.info/planetalibre/)
+* [Enlace oficial del sitio web desde un proxy Gemini a http/https (opción 2).](https://portal.mozz.us/gemini/reisub.nsupdate.info/planetalibre/)
+
 ## Dependencias
 
 * [MoonScript >= 0.5.0](https://moonscript.org/)
