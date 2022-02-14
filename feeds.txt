@@ -1,3 +1,5 @@
+gemini://gemini.circumlunar.space/news/atom.xml
+gemini://ivanruvalcaba.cf/atom.xml
 gemini://gemini.elbinario.net/atom.xml
 gemini://c3po.aljadra.xyz/atom.xml
 gemini://gemini.circumlunar.space/users/rbasile/blog/feed.atom
