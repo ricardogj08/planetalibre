@@ -16,7 +16,7 @@ PlanetaLibre es un sitio web en Gemini que recopila noticias sobre GNU/Linux, so
 
 => https://victorhck.gitlab.io/planetalibre/ Enlace del sitio web de PlanetaLibre por Victorhck.
 
-La recopilación de fuentes y la actualización del sitio web se realiza todos los días a las 10 a.m. y 6 p.m. en horario de la Ciudad de México. Se realiza de manera automática mediante una tarea en cron desde una Orange Pi PC con Parabola GNU/Linux-libre.
+La recopilación de fuentes y la actualización del sitio web se realiza todos los días a las 10 a.m. y 6 p.m. en horario de la Ciudad de México. Se realiza de manera automática mediante una tarea en cron desde una Orange Pi PC con Arch Linux ARM.
 
 > Desarrollado voluntariamente en MoonScript y basado en CAPCOM, espero que el programa y el sitio web sean de gran ayuda.
 
@@ -25,7 +25,7 @@ La recopilación de fuentes y la actualización del sitio web se realiza todos l
 
 ## ¿Cómo generar un feed para mi cápsula?
 
-Los feeds son un medio de redifusión de contenido (recursos) web actualizado, por ejemplo, la redifusión de un nuevo episodio de podcast, una nueva publicación artística, un nuevo vídeo, un artículo nuevo, etc. todo lo que represente un recurso web. Se utiliza con frecuencia en blogs bajo el protocolo http/https para dar a conocer las nuevas publicaciones de un blog a sus lectores.
+Los feeds son un medio de redifusión de contenido (recursos) web actualizado, por ejemplo, nuevos vídeos, música, imágenes, podcasts, documentos, etc. todo lo que represente un recurso web. Se utiliza con frecuencia en blogs bajo el protocolo http/https para dar a conocer las nuevas publicaciones de un blog a sus lectores.
 
 Existen dos formatos de redifusión web muy populares basados en el lenguaje de maquetado XML, el formato Atom y RSS. Por lo general, se suelen confundir o interpretar de la misma manera estos dos conceptos. Vea los términos Atom y RSS, como la estructura que debe seguir para construir un feed.
 

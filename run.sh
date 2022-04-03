@@ -13,7 +13,7 @@ moon "$repo"/planetalibre.moon \
   --footer "$layouts"/footer.gemini \
   --header "$layouts"/header.gemini \
   --input "$repo"/feeds.txt \
-  --lang "es" \
+  --lang es \
   --output "$webdir"/index.gemini \
   --title "PlanetaLibre"
 
