@@ -18,7 +18,7 @@ Un agregador de noticias de cápsulas [Gemini](https://gemini.circumlunar.space/
 * [feedparser](https://github.com/slact/lua-feedparser)
 * [lua-path](https://github.com/moteus/lua-path)
 
-Para instalar las dependecias en sistemas basados en Arch Linux, solo debes ejecutar los siguientes comandos con privilegios de administrador:
+Para instalar las dependencias en sistemas basados en Arch Linux, solo debes ejecutar los siguientes comandos con privilegios de administrador:
 
 ```
 # pacman -S gcc lua51 luarocks
