@@ -1,3 +1,4 @@
-website/index.gemini
-website/index.gmi
-website/atom.xml
+atom.xml
+footer.gmi
+header.gmi
+index.gmi

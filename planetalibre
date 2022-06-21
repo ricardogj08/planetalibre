@@ -1,0 +1,89 @@
+#!/usr/bin/env lua
+--
+-- PlanetaLibre - An Atom feed aggregator for Gemini written in Lua.
+--
+-- Copyright (C) 2021-2022 - Ricardo García Jiménez <ricardogj08@riseup.net>
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--     http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+
+local url = require('socket.url')
+local socket = require('socket')
+local ssl = require('ssl')
+require('feedparser')
+
+--- Configuración por defecto.
+local config = {
+  capsule = 'PlanetaLibre',
+  domain = 'localhost',
+  footer = 'footer.gmi',
+  header = 'header.gmi',
+  input = 'feeds.txt',
+  lang = 'es',
+  output = '.'
+}
+
+--- Muestra un mensaje de ayuda.
+local function shelp()
+  print([[
+PlanetaLibre 3.0 - An Atom feed aggregator for Gemini written in Lua.
+
+Synopsis:
+  planetalibre [OPTIONS]
+
+Options:
+  -c <STRING> - Capsule name [default: PlanetaLibre].
+  -d <DOMAIN> - Capsule domain name [default: localhost].
+  -f <FILE>   - Footer to the homepage [default: footer.gmi].
+  -h <FILE>   - Header to the homepage [default: header.gmi].
+  -i <FILE>   - File to read a feed URLs Gemini list [default: feeds.txt].
+  -l <LANG>   - Capsule content language [default: es].
+  -o <PATH>   - Output directory [default: .].]])
+  os.exit()
+end
+
+--- Opciones de uso.
+local function usage()
+  local numarg = #arg
+  if numarg == 0 then
+    shelp()
+  end
+  local option,param
+  for i=1,numarg,2 do
+    option = arg[i]
+    param = arg[i + 1] or shelp()
+    if option == '-c' then
+      config.capsule = param
+    elseif option == '-d' then
+      config.domain = param
+    elseif option == '-f' then
+      config.footer = param
+    elseif option == '-h' then
+      config.header = param
+    elseif option == '-i' then
+      config.input = param
+    elseif option == '-l' then
+      config.lang = param
+    elseif option == '-o' then
+      config.output = param
+    else
+      shelp()
+    end
+  end
+end
+
+local function main()
+  usage()
+end
+
+main()
