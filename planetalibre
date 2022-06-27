@@ -17,8 +17,8 @@
 -- limitations under the License.
 --
 
-local url = require('socket.url')
 local socket = require('socket')
+socket.url = require('socket.url')
 local ssl = require('ssl')
 require('feedparser')
 
@@ -30,7 +30,15 @@ local config = {
   header = 'header.gmi',
   input = 'feeds.txt',
   lang = 'es',
-  output = '.'
+  output = '.',
+  timeout = 3,
+  port = 1965,
+  ssl = {
+    mode = 'client',
+    protocol = 'tlsv1_2',
+    verify = 'none'
+  },
+  scheme = 'gemini'
 }
 
 --- Muestra un mensaje de ayuda.
@@ -54,12 +62,8 @@ end
 
 --- Opciones de uso.
 local function usage()
-  local numarg = #arg
-  if numarg == 0 then
-    shelp()
-  end
   local option,param
-  for i=1,numarg,2 do
+  for i=1,#arg,2 do
     option = arg[i]
     param = arg[i + 1] or shelp()
     if option == '-c' then
@@ -82,8 +86,63 @@ local function usage()
   end
 end
 
+--- Realiza una petición a un host remoto Gemini
+--- y obtiene el contenido de un feed de Atom o RSS.
+-- @param url string: URL Gemini del feed de Atom o RSS.
+-- @return string, nil or 1: Cuerpo del feed de Atom o RSS.
+local function request(url)
+  -- Segmenta la URL a una tabla.
+  local parsed_url = socket.url.parse(url)
+  -- Crea un socket TCP maestro.
+  local conn = assert(socket.tcp())
+  -- Define el tiempo máximo de espera por bloque
+  -- en modo no seguro (segundos).
+  conn:settimeout(config.timeout)
+  -- Transforma el socket maestro a cliente
+  -- para conectarse a un host remoto.
+  if not conn:connect(parsed_url.host, config.port)
+  then
+    return conn:close()
+  end
+  -- Configura a una conexión segura.
+  conn = ssl.wrap(conn, config.ssl)
+  if not conn then
+    return conn:close()
+  end
+  -- Establece el nombre del servidor remoto
+  -- al cual conectarse.
+  conn:sni(parsed_url.host)
+  -- Define el tiempo máximo de espera por bloque
+  -- en modo seguro (segundos).
+  conn:settimeout(config.timeout)
+  -- Transforma a una conexión segura.
+  if not conn:dohandshake() then
+    return conn:close()
+  end
+  local req = socket.url.build({
+    scheme = config.scheme,
+    host = parsed_url.host,
+    port = config.port,
+    path = parsed_url.path
+  })
+  -- Solicita el archivo XML del feed de Atom o RSS.
+  if not conn:send(req.."\r\n") then
+    return conn:close()
+  end
+  -- Ignora la cabecera de respuesta.
+  if not conn:receive("*l") then
+    return conn:close()
+  end
+  -- Obtiene el cuerpo de la respuesta.
+  local res = conn:receive("*a")
+  -- Cierra el socket TCP cliente.
+  conn:close()
+  return res
+end
+
 local function main()
   usage()
+  print(request('gemini://geminispace.info'))
 end
 
 main()
