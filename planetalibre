@@ -38,7 +38,8 @@ local config = {
     protocol = 'tlsv1_2',
     verify = 'none'
   },
-  scheme = 'gemini'
+  scheme = 'gemini',
+  limit = 64
 }
 
 --- Muestra un mensaje de ayuda.
@@ -54,7 +55,7 @@ Options:
   -d <DOMAIN> - Capsule domain name [default: localhost].
   -f <FILE>   - Footer to the homepage [default: footer.gmi].
   -h <FILE>   - Header to the homepage [default: header.gmi].
-  -i <FILE>   - File to read a feed URLs Gemini list [default: feeds.txt].
+  -i <FILE>   - File to read a Gemini feed URLs list [default: feeds.txt].
   -l <LANG>   - Capsule content language [default: es].
   -o <PATH>   - Output directory [default: .].]])
   os.exit()
@@ -93,6 +94,10 @@ end
 local function request(url)
   -- Segmenta la URL a una tabla.
   local parsed_url = socket.url.parse(url)
+  -- Valida la URL.
+  if not (parsed_url and parsed_url.host) then
+    return 1
+  end
   -- Crea un socket TCP maestro.
   local conn = assert(socket.tcp())
   -- Define el tiempo máximo de espera por bloque
@@ -140,9 +145,43 @@ local function request(url)
   return res
 end
 
+--- Mensaje de éxito.
+-- @param url string: URL del feed de Atom o RSS.
+local function success(url)
+  print('[ok] '..url)
+end
+
+--- Mensaje de fallos.
+-- @param url string: URL del feed de Atom o RSS.
+local function fail(url)
+  print('[fail] '..url)
+end
+
+--- Obtiene el cuerpo de los feeds de Atom
+--- o RSS Gemini desde una lista de URLs.
+-- @return table: Una tabla con el cuerpo de los feeds de Atom o RSS.
+local function feeds()
+  local file = assert(io.open(config.input))
+  local feeds,url,body = {}
+  for line in file:lines() do
+    -- Elimina espacios de principio y fin.
+    url = line:match("^%s*(.-)%s*$")
+    -- Obtiene el cuerpo de un feed de Atom o RSS.
+    body = request(url)
+    if body and body ~= 1 then
+      table.insert(feeds, {url = url, body = body})
+      success(url)
+    else
+      fail(url)
+    end
+  end
+  file:close()
+  return feeds
+end
+
 local function main()
   usage()
-  print(request('gemini://geminispace.info'))
+  print('== Scanning Gemini feed URLs ==')
 end
 
 main()
