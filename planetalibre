@@ -146,13 +146,13 @@ local function request(url)
 end
 
 --- Mensaje de éxito.
--- @param url string: URL del feed de Atom o RSS.
+-- @param url string: URL Gemini del feed de Atom o RSS.
 local function success(url)
   print('[ok] '..url)
 end
 
 --- Mensaje de fallos.
--- @param url string: URL del feed de Atom o RSS.
+-- @param url string: URL Gemini del feed de Atom o RSS.
 local function fail(url)
   print('[fail] '..url)
 end
@@ -160,9 +160,11 @@ end
 --- Obtiene el cuerpo de los feeds de Atom
 --- o RSS Gemini desde una lista de URLs.
 -- @return table: Una tabla con el cuerpo de los feeds de Atom o RSS.
-local function feeds()
+local function getFeeds()
+  print('==== Scanning Gemini feed URLs ====')
   local file = assert(io.open(config.input))
   local feeds,url,body = {}
+  -- Itera sobre cada línea del archivo.
   for line in file:lines() do
     -- Elimina espacios de principio y fin.
     url = line:match("^%s*(.-)%s*$")
@@ -179,9 +181,49 @@ local function feeds()
   return feeds
 end
 
+--- Obtiene los posts de los feeds de Atom o RSS.
+-- @param feeds table: Una tabla con el cuerpo de los feeds de Atom o RSS.
+-- @return table: Una tabla con los posts de los feeds de Atom o RSS.
+local function getPosts(feeds)
+  print('==== Validating feeds syntax ====')
+  local posts = {}
+  local parsed_feed,capsule,title,link,date
+  -- Itera sobre cada feed de Atom o RSS.
+  for _,feed in ipairs(feeds) do
+    -- Convierte el feed de Atom o RSS a una tabla.
+    parsed_feed = feedparser.parse(feed.body)
+    if parsed_feed and parsed_feed.feed.title then
+      capsule = parsed_feed.feed.title
+      -- Itera sobre cada entrada del feed de Atom o RSS.
+      for _,entry in ipairs(parsed_feed.entries) do
+        title,link = entry.title,entry.link
+        date = entry.updated_parsed
+        -- El título, el link y la fecha
+        -- de la entrada son obligatorios.
+        if title and link and date then
+          table.insert(posts, {
+            capsule = capsule,
+            title = title,
+            link = link,
+            date = date
+          })
+        end
+      end
+      success(feed.url)
+    else
+      fail(feed.url)
+    end
+  end
+  -- Ordena los post por fecha.
+  table.sort(posts, function(a,b)
+    return a.date > b.date
+  end)
+  return posts
+end
+
 local function main()
   usage()
-  print('== Scanning Gemini feed URLs ==')
+  getPosts(getFeeds())
 end
 
 main()
