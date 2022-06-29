@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 --
--- PlanetaLibre - An Atom feed aggregator for Gemini written in Lua.
+-- PlanetaLibre - An Atom or RSS feeds aggregator for Gemini written in Lua.
 --
 -- Copyright (C) 2021-2022 - Ricardo García Jiménez <ricardogj08@riseup.net>
 --
@@ -45,7 +45,7 @@ local config = {
 --- Muestra un mensaje de ayuda.
 local function shelp()
   print([[
-PlanetaLibre 3.0 - An Atom feed aggregator for Gemini written in Lua.
+PlanetaLibre 3.0 - An Atom or RSS feeds aggregator for Gemini written in Lua.
 
 Synopsis:
   planetalibre [OPTIONS]
@@ -246,14 +246,12 @@ local function render(posts)
   local id = socket.url.build({
     scheme = config.scheme,
     host = config.domain,
-    port = config.port,
     path = '/atom.xml'
   })
   -- URL Gemini del homepage de PlanetaLibre.
   local homepage = socket.url.build({
     scheme = config.scheme,
     host = config.domain,
-    port = config.port,
     path = '/index.gmi'
   })
   -- Genera el encabezado del feed de Atom de PlanetaLibre.

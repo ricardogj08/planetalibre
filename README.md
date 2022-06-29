@@ -1,6 +1,6 @@
 # PlanetaLibre
 
-An Atom feed aggregator for Gemini written in `Lua`.
+An Atom or RSS feeds aggregator for Gemini written in `Lua`.
 
 ## Installation
 
@@ -14,7 +14,7 @@ An Atom feed aggregator for Gemini written in `Lua`.
 
 ## License
 
-    PlanetaLibre - An Atom feed aggregator for Gemini written in Lua.
+    PlanetaLibre - An Atom or RSS feeds aggregator for Gemini written in Lua.
 
     Copyright (C) 2021-2022 - Ricardo García Jiménez <ricardogj08@riseup.net>
 
