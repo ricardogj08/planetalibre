@@ -109,7 +109,7 @@ local function request(url)
   then
     return conn:close()
   end
-  -- Configura a una conexión segura.
+  -- Configura una conexión segura.
   conn = ssl.wrap(conn, config.ssl)
   if not conn then
     return conn:close()
@@ -201,10 +201,16 @@ local function getPosts(feeds)
         -- El título, el link y la fecha
         -- de la entrada son obligatorios.
         if title and link and date then
+          link = socket.url.parse(link)
           table.insert(posts, {
             capsule = capsule,
             title = title,
-            link = link,
+            link = socket.url.build({
+              scheme = config.scheme,
+              host = link.host,
+              port = config.port,
+              path = link.path
+            }),
             date = date
           })
         end
@@ -221,9 +227,90 @@ local function getPosts(feeds)
   return posts
 end
 
+--- Genera el sitio web y el feed de Atom Gemini de PlanetaLibre.
+-- @param posts table: Una tabla con los posts de los feeds de Atom o RSS.
+local function render(posts)
+  print('==== Generating homepage and Atom feed ====')
+  local index = assert(io.open(config.output..'/index.gmi', "w+"))
+  local atom = assert(io.open(config.output..'/atom.xml', "w+"))
+  local fdate = '%Y-%m-%dT%H:%M:%SZ'
+  local pdate = '%F'
+  local timestamp,date = 0
+  -- Añade un header en index.gmi.
+  local header = io.open(config.header)
+  if header then
+    index:write(header:read("*a"))
+    header:close()
+  end
+  -- URL Gemini del feed de Atom de PlanetaLibre.
+  local id = socket.url.build({
+    scheme = config.scheme,
+    host = config.domain,
+    port = config.port,
+    path = '/atom.xml'
+  })
+  -- URL Gemini del homepage de PlanetaLibre.
+  local homepage = socket.url.build({
+    scheme = config.scheme,
+    host = config.domain,
+    port = config.port,
+    path = '/index.gmi'
+  })
+  -- Genera el encabezado del feed de Atom de PlanetaLibre.
+  atom:write(string.format([[
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="%s">
+<id>%s</id>
+<title>%s</title>
+<updated>%s</updated>
+<author>
+  <name>%s</name>
+</author>
+<link rel="self" href="%s" type="application/atom+xml"/>
+<link rel="alternate" href="%s" type="text/gemini"/>
+<generator uri="https://github.com/ricardogj08/planetalibre" version="3.0">PlanetaLibre</generator>
+]], config.lang, id, config.capsule, os.date(fdate), config.capsule, id, homepage))
+  -- Itera sobre cada post.
+  for itr,post in ipairs(posts) do
+    -- Agrega una entrada al feed de Atom de PlanetaLibre.
+    atom:write(string.format([[
+<entry>
+  <id>%s</id>
+  <title>%s</title>
+  <updated>%s</updated>
+  <author>
+    <name>%s</name>
+  </author>
+  <link rel="alternate" href="%s" type="text/gemini"/>
+</entry>
+]], post.link, post.title, os.date(fdate, post.date), post.capsule, post.link))
+    date = os.date(pdate, post.date)
+    -- Agrupa las publicaciones por día.
+    if timestamp ~= date then
+      timestamp = date
+      index:write("\n## "..timestamp.."\n\n")
+    end
+    -- Agrega un post en index.gmi.
+    index:write("=> "..post.link.." "..post.capsule.." - "..post.title.."\n")
+    if itr == config.limit then
+      break
+    end
+  end
+  index:write("\n")
+  atom:write("</feed>\n")
+  atom:close()
+  -- Añade un footer en index.gmi.
+  local footer = io.open(config.footer)
+  if footer then
+    index:write(footer:read("*a"))
+    footer:close()
+  end
+  index:close()
+end
+
 local function main()
   usage()
-  getPosts(getFeeds())
+  render(getPosts(getFeeds()))
 end
 
 main()
