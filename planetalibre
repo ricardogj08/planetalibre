@@ -242,17 +242,21 @@ local function render(posts)
     index:write(header:read("*a"))
     header:close()
   end
+  local parsed = socket.url.parse_path(config.domain)
+  parsed[2] = parsed[2] and '/'..parsed[2] or ''
   -- URL Gemini del feed de Atom de PlanetaLibre.
   local id = socket.url.build({
     scheme = config.scheme,
-    host = config.domain,
-    path = '/atom.xml'
+    port = config.port,
+    host = parsed[1],
+    path = parsed[2]..'/atom.xml'
   })
   -- URL Gemini del homepage de PlanetaLibre.
   local homepage = socket.url.build({
     scheme = config.scheme,
-    host = config.domain,
-    path = '/index.gmi'
+    port = config.port,
+    host = parsed[1],
+    path = parsed[2]..'/index.gmi'
   })
   -- Genera el encabezado del feed de Atom de PlanetaLibre.
   atom:write(string.format([[
