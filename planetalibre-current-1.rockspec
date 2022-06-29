@@ -4,7 +4,7 @@ source = {
   url = "git://github.com/ricardogj08/planetalibre.git"
 }
 description = {
-  summary = "An Atom feed aggregator for Gemini written in Lua.",
+  summary = "An Atom or RSS feeds aggregator for Gemini written in Lua.",
   homepage = "https://github.com/ricardogj08/planetalibre",
   license = "Apache-2.0"
 }

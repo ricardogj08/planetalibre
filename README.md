@@ -1,6 +1,6 @@
 # PlanetaLibre
 
-An Atom or RSS feeds aggregator for Gemini written in `Lua`.
+An Atom or RSS feeds aggregator for [Gemini](https://gemini.circumlunar.space/) written in `Lua`.
 
 ## Installation
 
