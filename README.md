@@ -2,6 +2,10 @@
 
 An Atom or RSS feeds aggregator for [Gemini](https://gemini.circumlunar.space/) written in `Lua`.
 
+## Dependencies
+
+* [LuaRocks](https://luarocks.org/)
+
 ## Installation
 
     git clone https://github.com/ricardogj08/planetalibre.git
@@ -10,6 +14,17 @@ An Atom or RSS feeds aggregator for [Gemini](https://gemini.circumlunar.space/) 
 
 ## References
 
+* [Gemini protocol specification.](https://gemini.circumlunar.space/docs/specification.gmi)
+* [Manual de Referencia de Lua 5.1](https://www.lua.org/manual/5.1/es/manual.html)
+* [Olivine Labs Lua Style Guide.](https://github.com/Olivine-Labs/lua-style-guide)
+* [LuaSocket introduction.](https://lunarmodules.github.io/luasocket/introduction.html)
+* [LuaSocket socket namespace reference.](https://lunarmodules.github.io/luasocket/socket.html)
+* [LuaSocket TCP module reference.](https://w3.impa.br/~diego/software/luasocket/tcp.html)
+* [LuaSec introduction.](https://github.com/brunoos/luasec/wiki)
+* [LuaSec 1.1.0 documentation.](https://github.com/brunoos/luasec/wiki/LuaSec-1.1.0)
+* [CAPCOM - Atom feed aggregator for Gemini.](https://tildegit.org/solderpunk/CAPCOM/)
+* [ASCII Art.](http://www.ascii-art.de/)
+* [Introduction to Atom.](https://validator.w3.org/feed/docs/atom.html)
 * [gemini-demo-2 - Minimal but usable interactive Gemini client in < 100 LOC of Lua.](https://tildegit.org/solderpunk/gemini-demo-2)
 
 ## License
